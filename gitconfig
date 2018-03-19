@@ -1,0 +1,10 @@
+[user]
+	name = Olof Kraigher
+	email = olof.kraigher@gmail.com
+
+[core]
+	editor = emacs
+
+[alias]
+	ci = commit
+	st = status -suno
