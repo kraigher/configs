@@ -1,12 +1,6 @@
 (require 'package)
 (setq package-archives
-      '(("GNU ELPA" . "https://elpa.gnu.org/packages/")
-        ("MELPA Stable" . "https://stable.melpa.org/packages/")
-        ("MELPA" . "https://melpa.org/packages/"))
-      package-archive-priorities
-      '(("MELPA Stable" . 10)
-        ("MELPA" . 5)
-        ("GNU ELPA" . 0)))
+      '(("MELPA" . "https://melpa.org/packages/")))
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 (package-initialize)
 
@@ -38,16 +32,6 @@
 ; VHDL
 (setq vhdl-electric-mode 'nil);
 
-; Rust
-(add-hook 'rust-mode-hook #'racer-mode)
-(add-hook 'racer-mode-hook #'eldoc-mode)
-(add-hook 'racer-mode-hook #'company-mode)
-(setq-default racer-rust-src-path "~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src")
-
-(require 'rust-mode)
-(define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
-(setq company-tooltip-align-annotations t)
-
 (defun my-verilog-hook ()
     (setq indent-tabs-mode nil)
     (setq tab-width 3))
@@ -60,7 +44,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (yasnippet-snippets yasnippet gnu-elpa-keyring-update yaml-mode eglot lsp-mode lsp-rust json-mode magit company racer))))
+    (lsp-treemacs company-lsp lsp-ui lsp-mode toml-mode yasnippet-snippets yasnippet gnu-elpa-keyring-update yaml-mode eglot json-mode magit company))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -84,4 +68,10 @@
 (add-to-list 'lsp-language-id-configuration '(vhdl-mode . "vhdl-mode"))
 (add-hook 'vhdl-mode-hook #'lsp)
 
+(add-hook 'rust-mode-hook #'lsp)
+
+(require 'lsp-ui)
+(add-hook 'lsp-mode-hook 'flycheck-mode)
+
+(setq lsp-enable-snippet nil)
 (setq compilation-scroll-output 'first-error)
