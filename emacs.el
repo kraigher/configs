@@ -44,7 +44,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (lsp-treemacs company-lsp lsp-ui lsp-mode toml-mode yasnippet-snippets yasnippet gnu-elpa-keyring-update yaml-mode eglot json-mode magit company))))
+    (cargo lsp-treemacs company-lsp lsp-ui lsp-mode toml-mode yasnippet-snippets yasnippet gnu-elpa-keyring-update yaml-mode eglot json-mode magit company racer))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -73,5 +73,11 @@
 (require 'lsp-ui)
 (add-hook 'lsp-mode-hook 'flycheck-mode)
 
-(setq lsp-enable-snippet nil)
+(require 'company-lsp)
+(push 'company-lsp company-backends)
+(add-hook 'lsp-mode-hook 'company-mode)
+(add-hook 'lsp-mode-hook 'yas-minor-mode)
+(setq company-lsp-enable-snippet 't)
+(setq company-lsp-enable-recompletion 't)
+
 (setq compilation-scroll-output 'first-error)
